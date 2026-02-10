@@ -1,52 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-    // ---------------------------------------------------------
-    // 1. BASE DE DATOS COMPLETA (JSON)
-    // ---------------------------------------------------------
-    // Aquí están las 10 clases de tu horario original.
-    // IMPORTANTE: Las horas están en formato militar (24h) para poder ordenarlas.
-    // 13 = 1:00 PM, 15 = 3:00 PM
     const horarioData = [
-        // PROGRAMACIÓN WEB (Gpo 1)
+        // GRUPO 1
         { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "MARTES", hora: 10, horaFin: "11:40", aula: "E201", tipo: "web" },
         { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "JUEVES", hora: 15, horaFin: "16:40", aula: "E201", tipo: "web" },
 
-        // INTRO INGENIERIA (Gpo 3)
+        // GRUPO 3
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "LUNES", hora: 8, horaFin: "09:40", aula: "D104", tipo: "ing" },
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "MIERCOLES", hora: 8, horaFin: "09:40", aula: "D104", tipo: "ing" },
 
-        // INTRO INGENIERIA (Gpo 4)
+        // GRUPO 4
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "LUNES", hora: 10, horaFin: "11:40", aula: "E201", tipo: "ing" },
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "JUEVES", hora: 8, horaFin: "09:40", aula: "E201", tipo: "ing" },
 
-        // INTRO INGENIERIA (Gpo 7 - Turno Tarde)
-        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "LUNES", hora: 15, horaFin: "04:40", aula: "D104", tipo: "ing" }, // 03:00 PM
-        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "JUEVES", hora: 13, horaFin: "02:40", aula: "D104", tipo: "ing" }, // 01:00 PM
+        // GRUPO 7
+        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "LUNES", hora: 15, horaFin: "04:40", aula: "D104", tipo: "ing" },
+        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "JUEVES", hora: 13, horaFin: "02:40", aula: "D104", tipo: "ing" },
 
-        // INTRO INGENIERIA (Gpo 8 - Turno Tarde)
-        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MARTES", hora: 15, horaFin: "04:40", aula: "D104", tipo: "ing" }, // 03:00 PM
-        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MIERCOLES", hora: 13, horaFin: "02:40", aula: "D104", tipo: "ing" } // 01:00 PM
+        // GRUPO 8
+        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MARTES", hora: 15, horaFin: "04:40", aula: "D104", tipo: "ing" },
+        { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MIERCOLES", hora: 13, horaFin: "02:40", aula: "D104", tipo: "ing" }
     ];
 
-    // ---------------------------------------------------------
-    // 2. CONFIGURACIÓN DEL MOTOR
-    // ---------------------------------------------------------
+    // Configuración
     const diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES'];
-    // Definimos las horas que queremos dibujar en el calendario (Eje Y)
-    const horasDia = [8, 9, 10, 11, 12, 13, 14, 15, 16]; 
+    // IMPORTANTE: El rango debe ser continuo para que el rowspan funcione bien
+    const horasDia = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]; 
 
-    // Referencias al HTML
+    // Referencias DOM
     const tablaEncabezado = document.getElementById('tablaEncabezado');
     const tablaCuerpo = document.getElementById('tablaCuerpo');
     const btnLista = document.getElementById('btnLista');
     const btnCalendario = document.getElementById('btnCalendario');
     const btnSalir = document.getElementById('btnSalir');
 
-    // ---------------------------------------------------------
-    // 3. FUNCIÓN: RENDERIZAR VISTA DE LISTA (TABLA CLÁSICA)
-    // ---------------------------------------------------------
+    // --- RENDERIZADO VISTA LISTA ---
     function renderizarLista() {
-        // A. Crear Encabezado
         tablaEncabezado.innerHTML = `
             <tr>
                 <th>CODIGO</th>
@@ -57,71 +45,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 <th>AULA</th>
             </tr>
         `;
-
-        // B. Crear Filas
-        tablaCuerpo.innerHTML = ''; // Limpiar tabla
+        tablaCuerpo.innerHTML = '';
         
         horarioData.forEach(clase => {
-            // Estilo condicional: Azul para Web, Negro para el resto
             const colorTexto = clase.tipo === 'web' ? 'text-primary' : '';
-            // Convertir hora militar a formato amigable
-            const horaMostrar = formatearHora(clase.hora);
-
-            const fila = `
+            tablaCuerpo.innerHTML += `
                 <tr>
                     <td class="fw-bold text-muted">${clase.codigo}</td>
                     <td class="text-start fw-bold ${colorTexto}">${clase.materia}</td>
                     <td><span class="badge rounded-pill text-bg-secondary">${clase.grupo}</span></td>
                     <td>${clase.dia}</td>
-                    <td>${horaMostrar} - ${clase.horaFin}</td>
+                    <td>${formatearHora(clase.hora)} - ${clase.horaFin}</td>
                     <td><span class="badge text-bg-info text-dark">${clase.aula}</span></td>
                 </tr>
             `;
-            tablaCuerpo.innerHTML += fila;
         });
     }
 
-    // ---------------------------------------------------------
-    // 4. FUNCIÓN: RENDERIZAR CALENDARIO (EL RETO)
-    // ---------------------------------------------------------
+    // --- RENDERIZADO CALENDARIO (CON LOGICA DE ROWSPAN) ---
     function renderizarCalendario() {
-        // A. Crear Encabezado con los Días
-        let headerHTML = '<tr><th class="columna-hora">HORA</th>';
+        // Header
+        let headerHTML = '<tr><th class="bg-light text-muted" style="width: 80px;">HORA</th>';
         diasSemana.forEach(dia => headerHTML += `<th>${dia}</th>`);
         headerHTML += '</tr>';
         tablaEncabezado.innerHTML = headerHTML;
 
-        // B. Crear Cuerpo (Bucle de Horas)
-        tablaCuerpo.innerHTML = ''; // Limpiar tabla
+        // Body
+        tablaCuerpo.innerHTML = '';
 
         horasDia.forEach(hora => {
             const row = document.createElement('tr');
             
-            // 1. Primera celda: La Hora
-            const horaLabel = formatearHora(hora);
-            row.innerHTML = `<td class="columna-hora">${horaLabel}</td>`;
+            // Columna Hora
+            row.innerHTML = `<td class="fw-bold text-secondary bg-light align-middle">${formatearHora(hora)}</td>`;
 
-            // 2. Celdas de los Días (Bucle dentro de Bucle)
             diasSemana.forEach(dia => {
-                // Buscamos si hay una clase en este DIA y a esta HORA exacta
-                const clase = horarioData.find(c => c.dia === dia && c.hora === hora);
+                // 1. ¿Hay una clase que EMPIEZA aquí?
+                const claseInicio = horarioData.find(c => c.dia === dia && c.hora === hora);
+                
+                // 2. ¿Hay una clase que empezó la HORA ANTERIOR y sigue aquí?
+                // (Esto evita que dibujemos una celda encima de la que viene de arriba)
+                const claseAnterior = horarioData.find(c => c.dia === dia && c.hora === (hora - 1));
 
-                if (clase) {
-                    // SI HAY CLASE: Dibujamos la tarjeta de color
-                    const bgClass = clase.tipo === 'web' ? 'bg-primary' : 'bg-success'; // Azul o Verde
+                if (claseInicio) {
+                    // -> CASO: INICIO DE CLASE
+                    // Usamos rowspan="2" para que ocupe esta hora y la siguiente
+                    const bgClass = claseInicio.tipo === 'web' ? 'bg-primary' : 'bg-success';
                     
                     row.innerHTML += `
-                        <td class="celda-calendario">
-                            <div class="asignatura-card ${bgClass} text-white">
-                                <div class="fw-bold small">${clase.materia}</div>
-                                <div class="info-detalle mt-1">
-                                    ${clase.aula} - ${clase.grupo}
-                                </div>
+                        <td rowspan="2" class="p-1 align-middle border-0">
+                            <div class="${bgClass} text-white p-2 rounded shadow h-100 d-flex flex-column justify-content-center">
+                                <div class="fw-bold lh-1 mb-1">${claseInicio.materia}</div>
+                                <div class="small opacity-75">${claseInicio.aula} - ${claseInicio.grupo}</div>
+                                <div class="badge bg-dark bg-opacity-25 mt-1">${formatearHora(claseInicio.hora)} - ${claseInicio.horaFin}</div>
                             </div>
                         </td>
                     `;
+                } else if (claseAnterior) {
+                    // -> CASO: CONTINUACION DE CLASE
+                    // Si la hora anterior tenía clase, NO DIBUJAMOS NADA (el rowspan de arriba ocupa este espacio).
+                    // Si pusiéramos un <td> vacío aquí, la tabla se deformaría hacia la derecha.
                 } else {
-                    // SI NO HAY CLASE: Dibujamos celda vacía (Requisito del reto)
+                    // -> CASO: LIBRE
+                    // Dibujamos celda vacía normal
                     row.innerHTML += `<td></td>`;
                 }
             });
@@ -130,29 +116,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---------------------------------------------------------
-    // 5. UTILIDADES Y EVENTOS
-    // ---------------------------------------------------------
-    
-    // Función auxiliar para convertir 13 -> 1:00 PM
+    // --- UTILIDADES ---
     function formatearHora(h) {
         return h > 12 ? (h - 12) + ":00 PM" : h + ":00 AM";
     }
 
-    // Control de botones (Toggle de estilos)
     function cambiarVista(vista) {
         if (vista === 'lista') {
-            btnLista.className = 'btn btn-primary'; // Activo
-            btnCalendario.className = 'btn btn-outline-secondary'; // Inactivo
+            btnLista.classList.replace('btn-outline-secondary', 'btn-primary');
+            btnCalendario.classList.replace('btn-primary', 'btn-outline-secondary');
             renderizarLista();
         } else {
-            btnLista.className = 'btn btn-outline-secondary'; // Inactivo
-            btnCalendario.className = 'btn btn-primary'; // Activo
+            btnCalendario.classList.replace('btn-outline-secondary', 'btn-primary');
+            btnLista.classList.replace('btn-primary', 'btn-outline-secondary');
             renderizarCalendario();
         }
     }
 
-    // Listeners
+    // --- EVENTOS ---
     btnLista.addEventListener('click', () => cambiarVista('lista'));
     btnCalendario.addEventListener('click', () => cambiarVista('calendario'));
     
@@ -162,6 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Iniciar por defecto en Vista LISTA
+    // Iniciar
     cambiarVista('lista');
 });
