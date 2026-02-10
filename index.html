@@ -3,150 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIU - Sistema de Inscripción Universitaria v1.0</title>
-    
+    <title>SIU - Sistema de Inscripción Universitaria</title>
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="#">
-                SIU-WEB
-            </a>
-            
+            <a class="navbar-brand fw-bold" href="#">SIU-WEB</a>
             <span class="navbar-text text-light mx-auto fw-bold d-none d-md-block text-uppercase">
                 Sistema Académico Docente
             </span>
-
-            <div class="d-flex text-end text-white align-items-center">
-                <div class="lh-1">
-                    <div class="fw-bold">Usuario: A. Cisneros</div>
-                    <small class="text-white-50">Período: 2026-I</small>
-                </div>
+            <div class="text-white text-end">
+                <div class="fw-bold">Usuario: A. Cisneros</div>
+                <small class="text-white-50">Período: 2026-I</small>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        
         <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
             <h4 class="text-danger fw-bold border-start border-4 border-danger ps-3 m-0">
                 REPORTE OFICIAL DE HORARIOS
             </h4>
             
-            <div class="btn-group shadow-sm">
-                <button type="button" class="btn btn-outline-secondary">IMPRIMIR REPORTE</button>
-                <button type="button" class="btn btn-outline-success">EXPORTAR A EXCEL</button>
-                <button type="button" class="btn btn-danger">CERRAR SESION</button>
+            <div class="d-flex gap-2">
+                <div class="btn-group shadow-sm me-3">
+                    <button id="btnLista" type="button" class="btn btn-primary">Vista Lista</button>
+                    <button id="btnCalendario" type="button" class="btn btn-outline-secondary">Vista Calendario</button>
+                </div>
+
+                <div class="btn-group shadow-sm">
+                    <button type="button" class="btn btn-outline-secondary">IMPRIMIR</button>
+                    <button type="button" class="btn btn-outline-success">EXCEL</button>
+                    <button id="btnSalir" type="button" class="btn btn-danger">SALIR</button>
+                </div>
             </div>
         </div>
 
         <div class="card shadow border-0">
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-bordered align-middle text-center mb-0">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>CODIGO</th>
-                                <th class="text-start w-25">ASIGNATURA</th>
-                                <th>GRUPO</th>
-                                <th>DIA</th>
-                                <th>HORARIO</th>
-                                <th>AULA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-bold text-muted">0413</td>
-                                <td class="text-start fw-bold text-primary">PROGRAMACION WEB</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo1</span></td>
-                                <td>MARTES</td>
-                                <td>10:00 - 11:40</td>
-                                <td><span class="badge text-bg-info text-dark">E201</span></td>
-                            </tr>
-
-                            <tr>
-                                <td class="fw-bold text-muted">0413</td>
-                                <td class="text-start fw-bold text-primary">PROGRAMACION WEB</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo1</span></td>
-                                <td>JUEVES</td>
-                                <td>15:00 - 16:40</td>
-                                <td><span class="badge text-bg-info text-dark">E201</span></td>
-                            </tr>
-
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo3</span></td>
-                                <td>LUNES</td>
-                                <td>08:00 - 09:40</td>
-                                <td><span class="badge text-bg-warning text-dark">D104</span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo3</span></td>
-                                <td>MIERCOLES</td>
-                                <td>08:00 - 09:40</td>
-                                <td><span class="badge text-bg-warning text-dark">D104</span></td>
-                            </tr>
-
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo4</span></td>
-                                <td>LUNES</td>
-                                <td>10:00 - 11:40</td>
-                                <td><span class="badge text-bg-info text-dark">E201</span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo4</span></td>
-                                <td>JUEVES</td>
-                                <td>08:00 - 09:40</td>
-                                <td><span class="badge text-bg-info text-dark">E201</span></td>
-                            </tr>
-
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo7</span></td>
-                                <td>LUNES</td>
-                                <td>03:00 - 04:40</td>
-                                <td><span class="badge text-bg-warning text-dark">D104</span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo7</span></td>
-                                <td>JUEVES</td>
-                                <td>01:00 - 02:40</td>
-                                <td><span class="badge text-bg-warning text-dark">D104</span></td>
-                            </tr>
-
-                             <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo8</span></td>
-                                <td>MARTES</td>
-                                <td>03:00 - 04:40</td>
-                                <td><span class="badge text-bg-warning text-dark">D104</span></td>
-                            </tr>
-                            
-                            <tr>
-                                <td class="fw-bold text-muted">0402</td>
-                                <td class="text-start">INTRO. INGENIERIA</td>
-                                <td><span class="badge rounded-pill text-bg-secondary">Gpo8</span></td>
-                                <td>MIERCOLES</td>
-                                <td>01:00 - 02:40</td>
-                                <td><span class="badge text-bg-warning text-dark">D104</span></td>
-                            </tr>
-                        </tbody>
+                    <table class="table table-bordered text-center align-middle mb-0">
+                        <thead class="table-dark" id="tablaEncabezado">
+                            </thead>
+                        <tbody id="tablaCuerpo">
+                            </tbody>
                     </table>
                 </div>
             </div>
@@ -157,5 +59,6 @@
     </div>
 
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
