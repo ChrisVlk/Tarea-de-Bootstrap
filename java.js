@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const horarioData = [
         // GRUPO 1
         { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "MARTES", hora: 10, horaFin: "11:40", aula: "E201", tipo: "web" },
-        { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "JUEVES", hora: 15, horaFin: "16:40", aula: "E201", tipo: "web" },
+        { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "JUEVES", hora: 15, horaFin: "4:40", aula: "E201", tipo: "web" },
 
         // GRUPO 3
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "LUNES", hora: 8, horaFin: "09:40", aula: "D104", tipo: "ing" },
