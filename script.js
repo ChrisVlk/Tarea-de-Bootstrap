@@ -1,24 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. BASE DE DATOS (Horario) ---
     const horarioData = [
-        // GRUPO 1 (Azul Pastel)
         { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "MARTES", hora: 10, horaFin: "11:40", aula: "E201" },
         { codigo: "0413", materia: "PROGRAMACION WEB", grupo: "Gpo1", dia: "JUEVES", hora: 15, horaFin: "16:40", aula: "E201" },
 
-        // GRUPO 3 (Verde Pastel)
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "LUNES", hora: 8, horaFin: "09:40", aula: "D104" },
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo3", dia: "MIERCOLES", hora: 8, horaFin: "09:40", aula: "D104" },
 
-        // GRUPO 4 (Rojo Suave)
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "LUNES", hora: 10, horaFin: "11:40", aula: "E201" },
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo4", dia: "JUEVES", hora: 8, horaFin: "09:40", aula: "E201" },
 
-        // GRUPO 7 (Amarillo Suave)
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "LUNES", hora: 15, horaFin: "04:40", aula: "D104" },
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo7", dia: "JUEVES", hora: 13, horaFin: "02:40", aula: "D104" },
 
-        // GRUPO 8 (Cyan/Celeste Pastel)
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MARTES", hora: 15, horaFin: "04:40", aula: "D104" },
         { codigo: "0402", materia: "INTRO. INGENIERIA", grupo: "Gpo8", dia: "MIERCOLES", hora: 13, horaFin: "02:40", aula: "D104" }
     ];
@@ -27,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const diasSemana = ['LUNES', 'MARTES', 'MIERCOLES', 'JUEVES', 'VIERNES'];
     const horasDia = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17]; 
 
-    // Referencias DOM
     const tablaEncabezado = document.getElementById('tablaEncabezado');
     const tablaCuerpo = document.getElementById('tablaCuerpo');
     const btnLista = document.getElementById('btnLista');
@@ -35,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSalir = document.getElementById('btnSalir');
 
 
-    // --- 2. PALETA DE COLORES PASTEL (Bootstrap 5) ---
-    // Usamos bg-opacity-25 para el fondo suave y text-* para que la letra resalte
+    // --- 2. PALETA DE COLORES PASTEL (Bootstrap 5) 
     function obtenerColorGrupo(grupo) {
         const mapaColores = {
             // Azul suave
@@ -53,8 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return mapaColores[grupo] || 'bg-secondary bg-opacity-25 text-secondary';
     }
 
-
-    // --- 3. RENDERIZADO VISTA LISTA ---
     function renderizarLista() {
         tablaEncabezado.innerHTML = `
             <tr>
@@ -70,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         horarioData.forEach(clase => {
             const claseColor = obtenerColorGrupo(clase.grupo);
-            // Si la materia es Web, ponemos el texto azul, si no, negro
             const colorTextoMateria = clase.materia.includes('WEB') ? 'text-primary' : '';
 
             tablaCuerpo.innerHTML += `
@@ -87,15 +76,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- 4. RENDERIZADO CALENDARIO ---
     function renderizarCalendario() {
-        // Header
         let headerHTML = '<tr><th class="bg-light text-muted" style="width: 80px;">HORA</th>';
         diasSemana.forEach(dia => headerHTML += `<th>${dia}</th>`);
         headerHTML += '</tr>';
         tablaEncabezado.innerHTML = headerHTML;
 
-        // Body
         tablaCuerpo.innerHTML = '';
 
         horasDia.forEach(hora => {
@@ -107,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const claseAnterior = horarioData.find(c => c.dia === dia && c.hora === (hora - 1));
 
                 if (claseInicio) {
-                    // Obtenemos el estilo pastel
                     const claseColor = obtenerColorGrupo(claseInicio.grupo);
                     
                     row.innerHTML += `
@@ -123,9 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         </td>
                     `;
                 } else if (claseAnterior) {
-                    // Espacio ocupado
+
                 } else {
-                    // Celda vacía
                     row.innerHTML += `<td></td>`;
                 }
             });
@@ -134,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- UTILIDADES ---
     function formatearHora(h) {
         return h > 12 ? (h - 12) + ":00 PM" : h + ":00 AM";
     }
@@ -161,6 +144,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Iniciar
     cambiarVista('lista');
 });
